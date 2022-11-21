@@ -19,13 +19,12 @@ const internschema= new mongoose.Schema({
     },
     collegeId:{
         type:ObjectId,
-        ref:college
+        ref:"college"
     },
-    isDeleted: {boolean, default: false}
+    isDeleted: {type:Boolean, default: false}
 },
 { timestamps: true });
 
 module.exports = mongoose.model('intern', internschema);
 
 
-// { name: {mandatory}, email: {mandatory, valid email, unique}, mobile: {mandatory, valid mobile number, unique}, collegeId: {ObjectId, ref to college model, isDeleted: {boolean, default: false}}
