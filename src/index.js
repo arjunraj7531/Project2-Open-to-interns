@@ -16,7 +16,7 @@ mongoose.connect("mongodb+srv://harsh:7534981251@projectnode.rzqgdbx.mongodb.net
 
 
 
-// app.use('/', route);
+ app.use('/', route);
 
 
 app.listen(process.env.PORT || 3000, function () {
