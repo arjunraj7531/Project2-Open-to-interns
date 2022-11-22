@@ -5,22 +5,22 @@ const createCollege=async function(req,res){
     try {
         const data=req.body
         if(Object.keys(data)==0){
-            res.status(403).send({status:false,msg:"Body is missing"})
+           return res.status(400).send({status:false,message:"Body is missing"})
         }
         if(data.name==undefined){
-            res.status(403).send({status:false,msg:"name is compulsory"})
+           return res.status(400).send({status:false,message:"name is compulsory"})
         }
         if (!(/^[a-z\.]+$/).test(data.name)) {
-            return res.status(400).send({ status: false, message: `name should be a valid` });
+            return res.status(400).send({ status: false, message: `name should be in lower case` });
           }
         if(data.fullName==undefined){
-           return res.status(403).send({status:false,msg:"full name is compulsory"})
+           return res.status(400).send({status:false,message:"full name is compulsory"})
         }
         if(!data.logoLink){
-            return res.status(400).send({status:false,msg:"Please enter logoLink"})
+            return res.status(400).send({status:false,message:"Please enter logoLink"})
         }
         if (!(/^[a-zA-Z0-9!@#$&()`.:?=_;~(){}%^*+,/"-]*$/).test(data.logolink)) {
-            return res.status(400).send({ status: false, message: `Url should be a valid ` });
+            return res.status(400).send({ status: false, message: "Url should be a valid " });
           }
           let valid= await collegeModel.findOne({name:data.name})
           if(valid){
@@ -50,7 +50,7 @@ const getCollegeData =async function (req,res){
 
         const data = await internModel.find({collegeId:collegeId,isDeleted:false}).select({name:1,email:1,mobile:1})
         if(data.length==0)  return res.status(404).send({status:false,message:"No interns found for this College"})
-
+          
         let obj={}
         const data2= await collegeModel.findOne({name:collegeName,isDeleted:false})
         obj.name=data2.name  
@@ -64,5 +64,5 @@ const getCollegeData =async function (req,res){
         return res.status(500).send({status:false,message:err.message})
     }
 }
-module.exports.getCollegeData=getCollegeData
+module.exports.getCollegeData=getCollegeData;
 module.exports.createCollege=createCollege;
