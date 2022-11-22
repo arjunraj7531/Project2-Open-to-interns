@@ -7,13 +7,13 @@ const createCollege=async function(req,res){
         if(Object.keys(data)==0){
            return res.status(400).send({status:false,message:"Body is missing"})
         }
-        if(data.name==undefined){
+        if(!data.name){
            return res.status(400).send({status:false,message:"name is compulsory"})
         }
         if (!(/^[a-z\.]+$/).test(data.name)) {
             return res.status(400).send({ status: false, message: `name should be in lower case` });
           }
-        if(data.fullName==undefined){
+        if(!data.fullName){
            return res.status(400).send({status:false,message:"full name is compulsory"})
         }
         if(!data.logoLink){
