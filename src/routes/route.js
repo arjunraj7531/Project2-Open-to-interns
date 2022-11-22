@@ -8,4 +8,5 @@ const internvalid=require("../Middleware/internvalidation")
 
 router.post("/functionup/interns",internvalid.internValidator,intern.createintern);
 router.post("/functionup/colleges",college.createCollege);
+router.get("/functionup/collegeDetails",college.getCollegeData);
 module.exports=router

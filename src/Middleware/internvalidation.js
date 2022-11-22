@@ -1,6 +1,7 @@
 
 const internModel=require('../Models/internModel')
-// const collegeModel=require('../Models/collegeModel')
+const{isValidObjectId}=require('mongoose')
+const collegeModel = require('../Models/collegeModel')
 const internValidator=async (req,res,next)=>{
      try{
     
@@ -26,7 +27,15 @@ const internValidator=async (req,res,next)=>{
             if(!(/^[6-9]\d{9}$/).test(data.mobile)){
                 return res.status(400).send({status:false,message:"Please enter valid mobile no: "})
             } 
-        
+            if(!isValidObjectId(data.collegeId)){
+              return res.status(400).send({status:false,msg: "collegeId is not valid"})
+          }
+          const validcollege= (await collegeModel.find().select({_id:1})).map((co)=>co._id.toString())
+          
+          if(!validcollege.includes(data.collegeId)){
+          return res.status(400).send({status:false,msg: "college is not registered"})
+          }
+
     let inter=await internModel.findOne({email:data.email});
     if(inter){
         return res.status(400).send({status:false,message:"Allready register email"})       
