@@ -27,6 +27,9 @@ const internValidator=async (req,res,next)=>{
             if(!(/^[6-9]\d{9}$/).test(data.mobile)){
                 return res.status(400).send({status:false,message:"Please enter valid mobile no: "})
             } 
+            if(!data.collegeId){
+              return res.status(400).send({status:false,msg: "Please enter the collegeId"})
+          }
             if(!isValidObjectId(data.collegeId)){
               return res.status(400).send({status:false,msg: "collegeId is not valid"})
           }
