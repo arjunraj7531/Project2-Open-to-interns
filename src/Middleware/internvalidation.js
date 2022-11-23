@@ -12,7 +12,7 @@ const internValidator=async (req,res,next)=>{
           if(!data.name){
              return res.status(400).send({status:false,message:"Please enter the name"})
           }
-        if(!(/^[A-Za-z]+$/).test(data.name)){
+        if(!(/^[A-Za-z ]+$/).test(data.name)){
             return res.status(400).send({status:false,msg:" name not valid"})
         }
            if(!data.email){

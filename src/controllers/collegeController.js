@@ -19,7 +19,7 @@ const createCollege=async function(req,res){
         if(!data.logoLink){
             return res.status(400).send({status:false,message:"Please enter logoLink"})
         }
-        if (!(/^[a-zA-Z0-9!@#$&()`.:?=_;~(){}%^*+,/"-]*$/).test(data.logolink)) {
+        if (!(/^(https\:\/\/.*\.(?:png|jpg|jpeg))/).test(data.logoLink)) {
             return res.status(400).send({ status: false, message: "Url should be a valid " });
           }
           let valid= await collegeModel.findOne({name:data.name})

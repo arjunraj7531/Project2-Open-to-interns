@@ -5,17 +5,17 @@ const ObjectId=mongoose.Schema.Types.ObjectId;
 const internschema= new mongoose.Schema({
     name:{
         type:String,
-        require:true
+        required:true
     },
     email:{
         type:String,
         unique:true,
-        require:true
+        required:true
     },
     mobile:{
         type:Number,
         unique:true,
-        require:true
+        required:true
     },
     collegeId:{
         type:ObjectId,
