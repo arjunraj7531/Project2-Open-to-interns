@@ -76,7 +76,7 @@ Refer below sample
     "logoLink" : "https://functionup.s3.ap-south-1.amazonaws.com/colleges/iith.png",
     "isDeleted" : false
 }
-```
+``
 #### Intern
 ```yaml
    {

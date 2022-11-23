@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const route = require('./routes/route.js');
 const { default: mongoose } = require('mongoose');
+const { application } = require('express');
 const app = express();
 
 app.use(bodyParser.json());
@@ -17,6 +18,10 @@ mongoose.connect("mongodb+srv://harsh:7534981251@projectnode.rzqgdbx.mongodb.net
 
 
  app.use('/', route);
+
+ app.use((req,res)=>{
+    res.status(400).send("request not found")
+})
 
 
 app.listen(process.env.PORT || 3000, function () {

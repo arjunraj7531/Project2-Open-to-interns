@@ -1,10 +1,7 @@
-
 const internModel=require('../Models/internModel')
-const{isValidObjectId}=require('mongoose')
-const collegeModel = require('../Models/collegeModel')
 const internValidator=async (req,res,next)=>{
      try{
-    
+          // start vaildation check
        let data=req.body
           if(Object.keys(data).length == 0){
             return res.status(400).send({status:false,message:"Please enter the body"})
@@ -27,22 +24,16 @@ const internValidator=async (req,res,next)=>{
             if(!(/^[6-9]\d{9}$/).test(data.mobile)){
                 return res.status(400).send({status:false,message:"Please enter valid mobile no: "})
             } 
-            if(!data.collegeId){
-              return res.status(400).send({status:false,msg: "Please enter the collegeId"})
+            if(!data.collegeName){
+              return res.status(400).send({status:false,msg: "Please enter the collegeName"})
           }
-            if(!isValidObjectId(data.collegeId)){
-              return res.status(400).send({status:false,msg: "collegeId is not valid"})
-          }
-          const validcollege= (await collegeModel.find().select({_id:1})).map((co)=>co._id.toString())
-          
-          if(!validcollege.includes(data.collegeId)){
-          return res.status(400).send({status:false,msg: "college is not registered"})
-          }
-
+           
+      // check the email allreday register or not
     let inter=await internModel.findOne({email:data.email});
     if(inter){
         return res.status(400).send({status:false,message:"Allready register email"})       
     }
+           // check the mobile number allready register or not
     let mobe=await internModel.findOne({mobile:data.mobile});
       if(mobe){
         return res.status(400).send({status:false,message:"Allready register mobile number"})
@@ -51,7 +42,7 @@ const internValidator=async (req,res,next)=>{
     next();
 }
 catch(error){
-    res.status(500).send({status:false,msg:"Server error"})
+    res.status(500).send({status:false,msg:error.message})
 }
 }
 

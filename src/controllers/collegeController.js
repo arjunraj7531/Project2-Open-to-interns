@@ -3,6 +3,7 @@ const internModel=require("../Models/internModel")
 
 const createCollege=async function(req,res){
     try {
+        // start validation check
         const data=req.body
         if(Object.keys(data)==0){
            return res.status(400).send({status:false,message:"Body is missing"})
@@ -26,6 +27,9 @@ const createCollege=async function(req,res){
           if(valid){
             return res.status(400).send({status:false,message:"college allready register"})
           }
+          //end validation checking
+
+          // Register college 
         const result=await collegeModel.create(data)
         return res.status(201).send({status:true,data:result})
     } catch (error) {
@@ -44,18 +48,22 @@ const getCollegeData =async function (req,res){
          if(!collegeName){
             return res.status(400).send({status:false,message:"Please enter college name"}) 
          }
+
+         //check college detail vaild or not 
         const data1= await collegeModel.findOne({name:collegeName,isDeleted:false})
         if(!data1)  return res.status(404).send({status:false,message:"collegeName doesn't exist in DB"})
         let collegeId=data1._id
-
+         
+        // check intern data in db how many intern are register given college name
         const data = await internModel.find({collegeId:collegeId,isDeleted:false}).select({name:1,email:1,mobile:1})
         if(data.length==0)  return res.status(404).send({status:false,message:"No interns found for this College"})
           
+        // create a empty object and set the value and keys
         let obj={}
-        const data2= await collegeModel.findOne({name:collegeName,isDeleted:false})
-        obj.name=data2.name  
-        obj.fullName=data2.fullName
-        obj.logoLink=data2.logoLink
+        console.log(data1)
+        obj.name=data1.name  
+        obj.fullName=data1.fullName
+        obj.logoLink=data1.logoLink
         obj.interns=data
 
         return res.status(200).send({status:true,data:obj})
