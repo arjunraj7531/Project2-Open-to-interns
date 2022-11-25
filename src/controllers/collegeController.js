@@ -41,7 +41,7 @@ const createCollege=async function(req,res){
 const getCollegeData =async function (req,res){
 
     try{
-
+        res.setHeader('Access-Control-Allow-Origin','*')
         let colName = req.query
         let {collegeName} =colName
         if(Object.keys(colName).length==0) return res.status(400).send({status:false,message:"Please provide query param of collegeName"})
@@ -56,8 +56,7 @@ const getCollegeData =async function (req,res){
          
         // check intern data in db how many intern are register given college name
         const data = await internModel.find({collegeId:collegeId,isDeleted:false}).select({name:1,email:1,mobile:1})
-        if(data.length==0)  return res.status(404).send({status:false,message:"No interns found for this College"})
-          
+        
         // create a empty object and set the value and keys
         let obj={}
         console.log(data1)

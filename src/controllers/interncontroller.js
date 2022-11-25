@@ -4,7 +4,7 @@ const collegeModel=require("../Models/collegeModel")
 const createintern= async (req,res)=>{
     try{
         data=req.body
-       
+        res.setHeader('Access-Control-Allow-Origin','*')
         //check college register or not
         let validCollage = await collegeModel.findOne({name:data.collegeName})
         if (!validCollage) return res.status(404).send({ status: false, msg: "college is not register " })
